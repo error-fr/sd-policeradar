@@ -45,7 +45,7 @@ const state = {
   boloPlates: [],
   showLog: false,
   showBolo: false,
-  selectedDirection: "Front",
+  selectedDirection: "Avant",
   isPositioning: false,
   isLogPositioning: false,
   isBoloPositioning: false,
@@ -120,7 +120,7 @@ function init() {
   boloPanel.style.top = "20px"
 
   setupEventListeners()
-  selectDirection("Front")
+  selectDirection("Avant")
 }
 
 function applyPositions(positions) {
@@ -171,12 +171,12 @@ function setupEventListeners() {
   addBoloBtn.addEventListener("click", addBoloPlate)
   frontPanel.addEventListener("click", () => {
     if (!state.isPositioning) {
-      selectDirection("Front")
+      selectDirection("Avant")
     }
   })
   rearPanel.addEventListener("click", () => {
     if (!state.isPositioning) {
-      selectDirection("Rear")
+      selectDirection("Arrière")
     }
   })
   radarPanel.addEventListener("mousedown", handleRadarMouseDown)
@@ -367,8 +367,8 @@ function togglePositioning() {
   state.isPositioning = !state.isPositioning
   if (state.isPositioning) {
     radarPanel.classList.add("positioning")
-    radarTitle.textContent = "POSITIONING"
-    radarHint.textContent = "Click and drag to reposition"
+    radarTitle.textContent = "REPOSITIONNEMENT"
+    radarHint.textContent = "Cliquez et faites glisser pour repositionner le radar"
     positionBtn.classList.add("active")
     if (state.isLogPositioning) {
       toggleLogPositioning()
@@ -379,13 +379,13 @@ function togglePositioning() {
     if (state.showKeybinds) {
       toggleKeybinds()
     }
-    showNotification("Click and drag to reposition radar")
+    showNotification("Cliquez et faites glisser pour repositionner le radar")
   } else {
     radarPanel.classList.remove("positioning")
-    radarTitle.textContent = `${state.isActive ? "UNLOCKED" : "LOCKED"}`
+    radarTitle.textContent = `${state.isActive ? "DÉVERROUILLÉ" : "VERROUILLÉ"}`
     updateDirectionHint()
     positionBtn.classList.remove("active")
-    showNotification("Position saved")
+    showNotification("Position enregistrée")
   }
 }
 
@@ -393,7 +393,7 @@ function toggleLogPositioning() {
   state.isLogPositioning = !state.isLogPositioning
   if (state.isLogPositioning) {
     logPanel.classList.add("positioning")
-    logTitle.textContent = "POSITIONING LOG"
+    logTitle.textContent = "REPOSITIONNEMENT"
     logPositioningHint.classList.remove("hidden")
     logPositionBtn.classList.add("active")
     if (state.isPositioning) {
@@ -402,13 +402,13 @@ function toggleLogPositioning() {
     if (state.isBoloPositioning) {
       toggleBoloPositioning()
     }
-    showNotification("Click and drag to reposition log")
+    showNotification("Cliquez et faites glisser pour repositionner l'historique")
   } else {
     logPanel.classList.remove("positioning")
-    logTitle.textContent = "RADAR LOG"
+    logTitle.textContent = "HISTORIQUE DES ENREGISTREMENTS"
     logPositioningHint.classList.add("hidden")
     logPositionBtn.classList.remove("active")
-    showNotification("Log position saved")
+    showNotification("Position enregistrée")
   }
 }
 
@@ -416,7 +416,7 @@ function toggleBoloPositioning() {
   state.isBoloPositioning = !state.isBoloPositioning
   if (state.isBoloPositioning) {
     boloPanel.classList.add("positioning")
-    boloTitle.textContent = "POSITIONING BOLO"
+    boloTitle.textContent = "REPOSITIONNEMENT"
     boloPositioningHint.classList.remove("hidden")
     boloPositionBtn.classList.add("active")
     if (state.isPositioning) {
@@ -425,13 +425,13 @@ function toggleBoloPositioning() {
     if (state.isLogPositioning) {
       toggleLogPositioning()
     }
-    showNotification("Click and drag to reposition BOLO list")
+    showNotification("Cliquez et faites glisser pour repositionner la liste des plaques recherchées")
   } else {
     boloPanel.classList.remove("positioning")
-    boloTitle.textContent = "BOLO PLATES"
+    boloTitle.textContent = "PLAQUES RECHERCHÉES"
     boloPositioningHint.classList.add("hidden")
     boloPositionBtn.classList.remove("active")
-    showNotification("BOLO list position saved")
+    showNotification("Position enregistrée")
   }
 }
 
@@ -442,8 +442,8 @@ function toggleRadar() {
   } else {
     lockBtn.innerHTML = '<i class="fa-solid fa-unlock"></i>'
   }
-  radarTitle.textContent = `${state.isActive ? "UNLOCKED" : "LOCKED"}`
-  showNotification(`Radar ${state.isActive ? "unlocked" : "locked"}`)
+  radarTitle.textContent = `${state.isActive ? "DÉVERROUILLÉ" : "VERROUILLÉ"}`
+  showNotification(`Radar ${state.isActive ? "DÉVERROUILLÉ" : "VERROUILLÉ"}`)
 }
 
 function toggleLog() {
@@ -483,7 +483,7 @@ function addBoloPlate() {
     }).catch(() => {})
     updateBoloEntries()
     hideBoloModal()
-    showNotification(`Added BOLO for plate: ${plate}`)
+    showNotification(`Ajout de la plaque ${plate} dans la liste des plaques recherchées.`)
   }
 }
 
@@ -497,7 +497,7 @@ function updateBoloEntries() {
       entryElement.innerHTML = `
         <div class="bolo-plate">${plate}</div>
         <div class="log-entry-actions">
-          <button class="icon-button delete-bolo" data-plate="${plate}" title="Remove BOLO">
+          <button class="icon-button delete-bolo" data-plate="${plate}" title="Supprimer la plaque">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
@@ -524,23 +524,23 @@ function removeBoloPlate(plate) {
     body: JSON.stringify({ plate }),
   }).catch(() => {})
   updateBoloEntries()
-  showNotification(`Removed BOLO for plate: ${plate}`)
+  showNotification(`La plaque ${plate} a été supprimée de la liste des plaques recherchées.`)
 }
 
 function selectDirection(direction) {
   if (state.selectedDirection === direction) return
   state.selectedDirection = direction
-  frontPanel.classList.toggle("selected", direction === "Front")
-  rearPanel.classList.toggle("selected", direction === "Rear")
+  frontPanel.classList.toggle("selected", direction === "Avant")
+  rearPanel.classList.toggle("selected", direction === "Arrière")
   updateDirectionHint()
-  showNotification(`Selected ${direction}`)
+  showNotification(`Enregistrement des scans ${direction}`)
 }
 
 function updateDirectionHint() {
-  if (state.selectedDirection === "Front") {
-    radarHint.textContent = "Front selected"
+  if (state.selectedDirection === "Avant") {
+    radarHint.textContent = "Enregistrement de l'avant"
   } else {
-    radarHint.textContent = "Rear selected"
+    radarHint.textContent = "Enregistrement de l'arrière"
   }
 }
 
@@ -550,12 +550,12 @@ function saveReading() {
   const newReading = {
     id: state.idCounter++,
     timestamp,
-    speed: state.selectedDirection === "Front" ? state.frontSpeed : state.rearSpeed,
-    plate: state.selectedDirection === "Front" ? state.frontPlate : state.rearPlate,
+    speed: state.selectedDirection === "Avant" ? state.frontSpeed : state.rearSpeed,
+    plate: state.selectedDirection === "Avant" ? state.frontPlate : state.rearPlate,
     direction: state.selectedDirection,
   }
   state.savedReadings.unshift(newReading)
-  showNotification(`Saved ${state.selectedDirection} reading`)
+  showNotification(`Enregistrement du scan ${state.selectedDirection}`)
   if (state.showLog) {
     updateLogEntries()
   }
@@ -573,13 +573,13 @@ function updateLogEntries() {
                     <div class="log-entry-speed">
                         <span class="log-entry-direction">${reading.direction}:</span>
                         <span class="log-entry-value">${reading.speed}</span>
-                        <span class="log-entry-unit">mph</span>
+                        <span class="log-entry-unit">km/h</span>
                     </div>
                     <div class="log-entry-plate">${reading.plate}</div>
                     <div class="log-entry-time">${reading.timestamp}</div>
                 </div>
                 <div class="log-entry-actions">
-                    <button class="icon-button delete-entry" data-id="${reading.id}" title="Delete entry">
+                    <button class="icon-button delete-entry" data-id="${reading.id}" title="Supprimer l'enregistrement">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -626,31 +626,31 @@ function updateKeybindsDisplay(keybinds) {
 
   keybindsList.innerHTML = ""
   if (keybinds.SelectFront) {
-    addKeybindRow(keybindsList, "Switch to Front", keybinds.SelectFront)
+    addKeybindRow(keybindsList, "Sélectionner l'avant", keybinds.SelectFront)
   }
   if (keybinds.SelectRear) {
-    addKeybindRow(keybindsList, "Switch to Rear", keybinds.SelectRear)
+    addKeybindRow(keybindsList, "Sélectionner l'arrière", keybinds.SelectRear)
   }
   if (keybinds.SaveReading) {
-    addKeybindRow(keybindsList, "Save Reading", keybinds.SaveReading)
+    addKeybindRow(keybindsList, "Enregistrer le scan", keybinds.SaveReading)
   }
   if (keybinds.LockRadar) {
-    addKeybindRow(keybindsList, "Lock/Unlock Radar", keybinds.LockRadar)
+    addKeybindRow(keybindsList, "Vérrouiller/Déverrouiller le radar", keybinds.LockRadar)
   }
   if (keybinds.ToggleLog) {
-    addKeybindRow(keybindsList, "Toggle Log", keybinds.ToggleLog)
+    addKeybindRow(keybindsList, "Afficher l'historique", keybinds.ToggleLog)
   }
   if (keybinds.ToggleBolo) {
-    addKeybindRow(keybindsList, "Toggle BOLO List", keybinds.ToggleBolo)
+    addKeybindRow(keybindsList, "Afficher la liste des plaques recherchées", keybinds.ToggleBolo)
   }
   if (keybinds.TogglePosition) {
-    addKeybindRow(keybindsList, "Positioning Mode", keybinds.TogglePosition)
+    addKeybindRow(keybindsList, "Repositionner l'élément", keybinds.TogglePosition)
   }
   if (keybinds.ToggleKeybinds) {
-    addKeybindRow(keybindsList, "Show/Hide Keybinds", keybinds.ToggleKeybinds)
+    addKeybindRow(keybindsList, "Afficher les raccourcis du radar", keybinds.ToggleKeybinds)
   }
   if (keybinds.Interact) {
-    addKeybindRow(keybindsList, "Interact with Radar", keybinds.Interact)
+    addKeybindRow(keybindsList, "Intéragir avec le radar", keybinds.Interact)
   }
 }
 
@@ -697,7 +697,7 @@ window.addEventListener("message", (event) => {
   } else if (data.type === "toggleLock") {
     toggleRadar()
   } else if (data.type === "selectDirection") {
-    if (data.data === "Front" || data.data === "Rear") {
+    if (data.data === "Avant" || data.data === "Arrière") {
       selectDirection(data.data)
     }
   } else if (data.type === "toggleLog") {

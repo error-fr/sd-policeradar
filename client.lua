@@ -73,13 +73,13 @@ end, false)
 RegisterKeyMapping("radarInteract", "Interact with Radar UI", "keyboard", Config.Keybinds.Interact)
 
 local simpleCommands = {
-    radarSave = { key = Config.Keybinds.SaveReading, desc = "Save Radar Reading", msg = { type = "saveReading" } },
-    radarLock = { key = Config.Keybinds.LockRadar, desc = "Toggle Radar Lock", msg = { type = "toggleLock" } },
-    radarSelectFront = { key = Config.Keybinds.SelectFront, desc = "Select Front", msg = { type = "selectDirection", data = "Front" } },
-    radarSelectRear = { key = Config.Keybinds.SelectRear, desc = "Select Rear", msg = { type = "selectDirection", data = "Rear" } },
-    radarToggleLog = { key = Config.Keybinds.ToggleLog, desc = "Toggle Radar Log", msg = { type = "toggleLog" } },
-    radarToggleBolo = { key = Config.Keybinds.ToggleBolo, desc = "Toggle BOLO List", msg = { type = "toggleBolo" } },
-    radarToggleKeybinds = { key = Config.Keybinds.ToggleKeybinds, desc = "Toggle Radar Keybinds", msg = { type = "toggleKeybinds" } }
+    radarSave = { key = Config.Keybinds.SaveReading, desc = "Enregistrer la lecture du radar", msg = { type = "saveReading" } },
+    radarLock = { key = Config.Keybinds.LockRadar, desc = "Verrouiller le radar", msg = { type = "toggleLock" } },
+    radarSelectFront = { key = Config.Keybinds.SelectFront, desc = "Sélectionner l’avant", msg = { type = "selectDirection", data = "Front" } },
+    radarSelectRear = { key = Config.Keybinds.SelectRear, desc = "Sélectionner l’arrière", msg = { type = "selectDirection", data = "Rear" } },
+    radarToggleLog = { key = Config.Keybinds.ToggleLog, desc = "Afficher l'historique du radar", msg = { type = "toggleLog" } },
+    radarToggleBolo = { key = Config.Keybinds.ToggleBolo, desc = "Afficher la liste des plaques recherchées", msg = { type = "toggleBolo" } },
+    radarToggleKeybinds = { key = Config.Keybinds.ToggleKeybinds, desc = "Afficher les raccourcis du radar", msg = { type = "toggleKeybinds" } }
 }
 
 for command, info in pairs(simpleCommands) do

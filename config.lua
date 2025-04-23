@@ -31,7 +31,7 @@ Config.Keybinds = {
 }
 
 -- Speed multiplier (2.23694 for MPH, 3.6 for KMH)
-Config.SpeedMultiplier = 2.23694
+Config.SpeedMultiplier = 3.6
 
 -- Update interval in ms
 Config.UpdateInterval = 200
